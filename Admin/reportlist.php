@@ -1,0 +1,244 @@
+<?php 
+//Check if init.php exists
+if(!file_exists('../core/init.php')){
+	header('Location: ../install/');        
+    exit;
+}else{
+ require_once '../core/init.php';	
+}
+
+//Start new Admin Object
+$admin = new Admin();
+
+//Check if Admin is logged in
+if (!$admin->isLoggedIn()) {
+  Redirect::to('index.php');	
+}
+?>
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+
+    <!-- Include header.php. Contains header content. -->
+    <?php include ('template/header.php'); ?>
+  
+<body class="skin-green sidebar-mini">
+     
+     <!-- ==============================================
+     Wrapper Section
+     =============================================== -->
+	 <div class="wrapper">
+	 	
+        <!-- Include navigation.php. Contains navigation content. -->
+	 	<?php include ('template/navigation.php'); ?> 
+        <!-- Include sidenav.php. Contains sidebar content. -->
+	 	<?php include ('template/sidenav.php'); ?> 
+	 	
+	  <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1><?php echo $lang['report']; ?><small><?php echo $lang['section']; ?></small></h1>
+          <ol class="breadcrumb">
+            <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> <?php echo $lang['home']; ?></a></li>
+            <li class="active"><?php echo $lang['report']; ?> <?php echo $lang['list']; ?></li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">	 	
+		    <!-- Include currency.php. Contains header content. -->
+		    <?php include ('template/currency.php'); ?>   
+		 <div class="row">	
+		 	
+		 	<div class="col-md-12">
+		 		
+		 		<div class="box box-info">
+                <div class="box-header">
+                  <h3 class="box-title"><?php echo $lang['message']; ?> <?php echo $lang['reported']; ?></h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <div class="table-responsive">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+					   <th><?php echo $lang['reporter']; ?></th>
+					   <th><?php echo $lang['message']; ?></th>
+					   <th><?php echo $lang['date']; ?> <?php echo $lang['added']; ?></th>
+					   <th><?php echo $lang['action']; ?></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+				    <?php
+                     $query = DB::getInstance()->get("report", "*", ["ORDER" => "date_added DESC"]);
+                     if($query->count()) {
+						foreach($query->results() as $row) {
+							
+					    $q = DB::getInstance()->get("message", "*", ["id" => $row->messageid]);
+						if ($q->count()) {
+							 foreach ($q->results() as $r) {
+							  $message = $r->message;	
+						     }
+						}
+							
+							
+						$q1 = DB::getInstance()->get("freelancer", "*", ["freelancerid" => $row->by_userid, "LIMIT" => 1]);
+						if ($q1->count() === 1) {
+						 foreach($q1->results() as $r1) {
+						  $reporter .='
+						             <img src="../Freelancer/'. escape($r1->imagelocation) .'" class="img-responsive img-thumbnail" width="50" height="40"/>
+							             <a href="../freelancer.php?a=overview&id='. escape($r1->freelancerid) .'" target="_blank">'. escape($r1->name) .'</a>
+						            ';	
+						 }
+						}else {
+						    $q1 = DB::getInstance()->get("client", "*", ["clientid" => $row->by_userid, "LIMIT" => 1]);
+							if ($q1->count() === 1) {
+							 foreach($q1->results() as $r1) {
+							  $reporter .='
+							             <img src="../Client/'. escape($r1->imagelocation) .'" class="img-responsive img-thumbnail" width="50" height="40"/>
+							             <a href="../client.php?a=overview&id='. escape($r1->clientid) .'" target="_blank">'. escape($r1->name) .'</a>
+							            ';	
+							 }
+							}else {
+								$reporter .='';
+							}							
+							
+						}
+												
+					    echo '<tr>';
+					    echo '<td>'. $reporter .'</td>';
+					    echo '<td>'. $message .'</td>';
+					    echo '<td>'. escape(strftime("%b %d, %Y, %H : %M %p ", strtotime($row->date_added))) .'</td>';
+						
+					    echo '<td>
+					      <a id="' . escape($row->id) . '" class="btn btn-info btn-xs" data-toggle="tooltip" title="' . $lang['delete'] . ' ' . $lang['this'] . ' ' . $lang['report'] . '"><span class="fa fa-trash"></span></a>
+					      <a id="' . escape($row->id) . '" class="btn btn-danger btn-report btn-xs" data-toggle="tooltip" title="' . $lang['delete'] . ' ' . $lang['the'] . ' ' . $lang['message'] . '"><span class="fa fa-trash"></span></a>
+					      
+					      </td>';
+					    echo '</tr>';
+						unset($reporter);
+					   }
+					}else {
+						echo $lang['no_results'];
+					}
+			        ?>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+					   <th><?php echo $lang['reporter']; ?></th>
+					   <th><?php echo $lang['message']; ?></th>
+					   <th><?php echo $lang['date']; ?> <?php echo $lang['added']; ?></th>
+					   <th><?php echo $lang['action']; ?></th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                  </div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->  	
+			  
+	         
+		 </div><!-- /.col-lg-12 -->	 
+	    </div><!-- /.row -->		  		  
+	   </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+	 	
+      <!-- Include footer.php. Contains footer content. -->	
+	  <?php include 'template/footer.php'; ?>	
+	 	
+     </div><!-- /.wrapper -->   
+
+	
+	 <!-- ==============================================
+	 Scripts
+	 =============================================== -->
+	 
+    <!-- jQuery 2.1.4 -->
+    <script src="../assets/js/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.6 JS -->
+    <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- DATA TABES SCRIPT -->
+    <script src="../assets/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="../assets/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <!-- AdminLTE App -->
+    <script src="../assets/js/app.min.js" type="text/javascript"></script>
+    <!-- page script -->
+    <script type="text/javascript">
+      $(function () {
+        $("#example1").dataTable({
+        /* No ordering applied by DataTables during initialisation */
+        "order": []
+        });
+      });
+    </script>
+    <script type="text/javascript">
+	$(function() {
+	
+	
+	$(".btn-info").click(function(){
+	
+	//Save the link in a variable called element
+	var element = $(this);
+	
+	//Find the id of the link that was clicked
+	var id = element.attr("id");
+	
+	//Built a url to send
+	var info = 'id=' + id;
+	 if(confirm("<?php echo $lang['delete_report']; ?>"))
+			  {
+			var parent = $(this).parent().parent();
+				$.ajax({
+				 type: "GET",
+				 url: "template/delete/deletereport.php",
+				 data: info,
+				 success: function()
+					   {
+						parent.fadeOut('slow', function() {$(this).remove();});
+					   }
+				});
+			 
+	
+			  }
+		   return false;
+	
+		});
+	
+	});
+	</script>
+    <script type="text/javascript">
+	$(function() {
+	
+	
+	$(".btn-report").click(function(){
+	
+	//Save the link in a variable called element
+	var element = $(this);
+	
+	//Find the id of the link that was clicked
+	var id = element.attr("id");
+	
+	//Built a url to send
+	var info = 'id=' + id;
+	 if(confirm("<?php echo $lang['delete_report_message']; ?>"))
+			  {
+			var parent = $(this).parent().parent();
+				$.ajax({
+				 type: "GET",
+				 url: "template/delete/deletereportmessage.php",
+				 data: info,
+				 success: function()
+					   {
+						parent.fadeOut('slow', function() {$(this).remove();});
+					   }
+				});
+			 
+	
+			  }
+		   return false;
+	
+		});
+	
+	});
+	</script>
+
+</body>
+</html>
