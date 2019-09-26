@@ -19,7 +19,6 @@ if(!file_exists('core/frontinit.php')){
     <!-- Include header.php. Contains header content. -->
     <?php 
 
-//jkfdhkj
     include ('includes/template/header.php'); ?> 
 
 <body class="greybg">
