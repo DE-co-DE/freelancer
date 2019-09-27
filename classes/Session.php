@@ -12,7 +12,8 @@ class Session{
 	
 	public static function put($name, $value)
 	{
-	  return $_SESSION[$name] = $value;	
+	 $ses=$_SESSION[$name] = $value;	
+	 return $ses;
 	}
 	
 	public static function get($name)
