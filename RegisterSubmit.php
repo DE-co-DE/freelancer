@@ -104,18 +104,22 @@ if (Input::exists()) {
 					   thank you :)
 					   ";
 			    $subject = "Verify your Email";
-			   $headers = 'From: ' .' <admin@troislogic.com>' . "\r\n";
-			//if(mail($email, $subject, $message, $headers)){
-				 echo 'otp sent '.$otp;
-			// }
-			// else{
 
-			// 	  echo '<div class="alert alert-danger fade in">
-   //              <a href="#" class="close" data-dismiss="alert">&times;</a>
-   //              <strong>Error!</strong>Email not sent , try again<br/>
-   //             </div>';
+			    
+$headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+			   $headers = 'From: ' .' <admin@troislogic.com>' . "\r\n";
+			if(mail($email, $subject, $message, $headers)){
+				 echo 'otp sent '.$otp;
+			}
+			else{
+
+				  echo '<div class="alert alert-danger fade in">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>Error!</strong>Email not sent , try again<br/>
+               </div>';
                
-			// }
+			}
 
 			   // sendMail($email,$message,$subject,'Verify your Email',$smail,$smailpass);
               
@@ -161,13 +165,13 @@ if (Input::exists()) {
 				  
 				if ($client) {
                     $login = $client->login(Input::get('email'), Input::get('password'), $remember);
-                    Redirect::to('Client/');
+                    echo'Client';
 			    }else {
 			     $hasError = true;
 			   }
 					
 				}catch(Exception $e){
-				 die($e->getMessage());	
+				 echo $e->getMessage();	
 				}				      	
 	          
 	      } else {
@@ -242,7 +246,7 @@ if (Input::exists()) {
 		 
       }
 
- }	  
+ 	}	  
   	
 }
 function generateOtp(){

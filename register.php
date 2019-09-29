@@ -78,7 +78,8 @@ if ($q1->count() === 1) {
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
 	    <!-- ==============================================
 		CSS
 		=============================================== -->
@@ -380,7 +381,14 @@ $test = $_SERVER["REQUEST_URI"];
 								
 								$('#otp').removeClass('hidden');
 							}else if(resp=='Freelancer' || resp=='Client'){
-								window.location.href=resp+'/';
+								Swal.fire({
+							 
+							  type: 'success',
+							  title: 'Registration successfull.',
+							  showConfirmButton: false,
+							  timer: 1500
+							})
+							setTimeout(function(){window.location.href=resp+'/'},1000);
 							} 
 
 							else{
@@ -437,6 +445,7 @@ $test = $_SERVER["REQUEST_URI"];
 			  <div class="form-actions">
 			 
                <input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
+
 			   <input value="<?php echo $lang['register']; ?>" class="form-btn" type="submit">
 			  </div><!-- /.form-actions -->
 			 </div><!-- /.form-foot -->
