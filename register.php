@@ -27,7 +27,8 @@ if ($query->count()) {
 $q1 = DB::getInstance()->get("payments_settings", "*", ["id" => 1]);
 if ($q1->count()) {
  foreach($q1->results() as $r1) {
- 	$currency = $r1->currency;
+ 	$currency = $r1->currency; 
+
  	$membershipid = $r1->membershipid;
  }			
 }
@@ -330,7 +331,7 @@ $test = $_SERVER["REQUEST_URI"];
 		} ?>
 	     	
 		  <div class="form-sign">
-		  <div class="error"></div>
+		
 		   <form method="post" action="">
 		    <div class="form-head">
 			 <h3><?php echo $lang['register']; ?></h3>
@@ -375,10 +376,14 @@ $test = $_SERVER["REQUEST_URI"];
 							data:$(this).serialize(),
 							success:function(resp){
 								alert(resp)
-							if(resp=='otp sent'){
+							if(resp.includes('otp sent')){
 								
 								$('#otp').removeClass('hidden');
-							}else{
+							}else if(resp=='Freelancer' || resp=='Client'){
+								window.location.href=resp+'/';
+							} 
+
+							else{
 								$('.error').html(resp);
 							}
 							}
@@ -420,7 +425,7 @@ $test = $_SERVER["REQUEST_URI"];
 		   
 			 </div><!-- /.form-body -->
 			 <div class="form-row hidden" id="otp" >
-			 <label class="text-white">We have sent you otp on your mail id</label>
+			 <label style="color:white">We have sent you otp on your mail id</label>
 			  <div class="form-controls">
 
 			   <input type="number" name="otp" class="field" placeholder="Enter your OTP">
@@ -436,7 +441,8 @@ $test = $_SERVER["REQUEST_URI"];
 			  </div><!-- /.form-actions -->
 			 </div><!-- /.form-foot -->
 		   </form>
-		   
+		   <br>
+		     <div class="error"></div>
 		  </div><!-- /.form-sign -->
 	     </div><!-- /.col-lg-6 -->
         </main>

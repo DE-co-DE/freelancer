@@ -1,12 +1,50 @@
 <?php
+//Check if frontinit.php exists
 if(!file_exists('core/frontinit.php')){
 	header('Location: install/');        
     exit;
 }else{
  require_once 'core/frontinit.php';	
 }
-//Register Function
 
+
+//Get Site Settings Data
+$query = DB::getInstance()->get("settings", "*", ["id" => 1]);
+if ($query->count()) {
+ foreach($query->results() as $row) {
+ 	$title = $row->title;
+ 	$use_icon = $row->use_icon;
+ 	$site_icon = $row->site_icon;
+ 	$tagline = $row->tagline;
+ 	$description = $row->description;
+ 	$keywords = $row->keywords;
+ 	$author = $row->author;
+ 	$bgimage = $row->bgimage;
+ }			
+}
+
+//Get Payments Settings Data
+$q1 = DB::getInstance()->get("payments_settings", "*", ["id" => 1]);
+if ($q1->count()) {
+ foreach($q1->results() as $r1) {
+ 	$currency = $r1->currency; 
+
+ 	$membershipid = $r1->membershipid;
+ }			
+}
+
+//Getting Payement Id from Database
+$query = DB::getInstance()->get("membership_freelancer", "*", ["membershipid" => $membershipid]);
+if ($query->count() === 1) {
+  $q1 = DB::getInstance()->get("membership_freelancer", "*", ["membershipid" => $membershipid]);
+} else {
+  $q1 = DB::getInstance()->get("membership_agency", "*", ["membershipid" => $membershipid]);
+}
+if ($q1->count() === 1) {
+ foreach($q1->results() as $r1) {
+  $bids = $r1->bids;
+ }
+}
 if (Input::exists()) {
     
  if(Token::check(Input::get('token'))){
@@ -49,15 +87,42 @@ if (Input::exists()) {
        
         if(empty(Input::get('otp'))){
           
-           
+
            $otp= $otp=generateOtp();
            if($otp!=''){
-               echo 'otp sent';
+
+           	$email = Input::get('email');
+				$message= "
+					   <p>Hello ,</p>
+					   <br /><br />
+					   <p>We got request to generate your otp,</p>
+					   <br /><br />
+					   <p>Copy Following OTP number To verify your email </p> 
+					   <br /><br />
+					   <h1>".$otp."</h1>
+					   <br /><br />
+					   thank you :)
+					   ";
+			    $subject = "Verify your Email";
+			   $headers = 'From: ' .' <admin@troislogic.com>' . "\r\n";
+			//if(mail($email, $subject, $message, $headers)){
+				 echo 'otp sent '.$otp;
+			// }
+			// else{
+
+			// 	  echo '<div class="alert alert-danger fade in">
+   //              <a href="#" class="close" data-dismiss="alert">&times;</a>
+   //              <strong>Error!</strong>Email not sent , try again<br/>
+   //             </div>';
+               
+			// }
+
+			   // sendMail($email,$message,$subject,'Verify your Email',$smail,$smailpass);
+              
            }
            exit;
         }else{
-            print_r('$_SESSION');
-    exit;
+           
             $resp=check_otp(Input::get('otp'));
             if($resp==false){
                 echo '<div class="alert alert-danger fade in">
@@ -67,14 +132,16 @@ if (Input::exists()) {
                exit;
             }
         }
+
 	      if (Input::get('user_type') == 0) {
+
 		        $client = new Client();
 		  
 				$remember = (Input::get('remember') === 'on') ? true : false;
 				$salt = Hash::salt(32);  
 				$imagelocation = 'uploads/default.png';
                 $clientid = uniqueid(); 
-                $otp=generateOtp($clientid,'Client');
+                $otp=  $_SESSION['otp'];
 				try{
 					
 				  $client->create(array(
@@ -104,16 +171,21 @@ if (Input::exists()) {
 				}				      	
 	          
 	      } else {
+
 			if($membershipid != ''){
-			    
+
+			    	//print_r($_POST);
+				
 			    $freelancer = new Freelancer();
-		  
-				$remember = (Input::get('remember') === 'on') ? true : false;
-				$salt = Hash::salt(32);  
+		  		
+				 $remember = (Input::get('remember') === 'on') ? true : false;
+				
+				  $salt = Hash::salt(32);  
+				
 				$imagelocation = 'uploads/default.png';
 				$bgimage = 'uploads/bg/default.jpg';
                 $freelancerid = uniqueid(); 
-                $otp=generateOtp($freelancerid,'Freelancer');
+               $otp=  $_SESSION['otp'];
 				try{
 					
 				  $freelancer->create(array(
@@ -137,13 +209,14 @@ if (Input::exists()) {
 				  
 				if ($freelancer) {
                     $login = $freelancer->login(Input::get('email'), Input::get('password'), $remember);
-				 Redirect::to('Freelancer/');
+				echo 'Freelancer';
+
 			    }else {
 			     $hasError = true;
 			   }
 					
 				}catch(Exception $e){
-				 die($e->getMessage());	
+				 echo $e->getMessage();	
 				}	
 	          } else {
 				  $memError = true;
