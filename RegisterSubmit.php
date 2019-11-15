@@ -94,20 +94,20 @@ if (Input::exists()) {
            	$email = Input::get('email');
 				$message= "
 					   <p>Hello ,</p>
-					   <br /><br />
+					 
 					   <p>We got request to generate your otp,</p>
-					   <br /><br />
+					  
 					   <p>Copy Following OTP number To verify your email </p> 
-					   <br /><br />
+					  
 					   <h1>".$otp."</h1>
-					   <br /><br />
+					   
 					   thank you :)
 					   ";
 			    $subject = "Verify your Email";
 
 			    
-$headers = "MIME-Version: 1.0" . "\r\n";
-$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+				$headers = "MIME-Version: 1.0" . "\r\n";
+				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 			   $headers = 'From: ' .' <admin@troislogic.com>' . "\r\n";
 			if(mail($email, $subject, $message, $headers)){
 				 echo 'otp sent '.$otp;

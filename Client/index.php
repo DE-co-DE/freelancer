@@ -214,6 +214,7 @@ if (!$client->isLoggedIn()) {
             <header class="panel-heading"><?php echo $lang['payments']; ?> </header>
             <div class="panel-body text-center"> 
             <?php
+            $r=[];
 			$query = DB::getInstance()->get("job", "*", ["AND" =>["clientid" => $client->data()->clientid, "invite" => "0", "delete_remove" => 0, "accepted" => 1]]);
 			if ($query->count()) {
 			 foreach($query->results() as $row) {
@@ -264,7 +265,7 @@ if (!$client->isLoggedIn()) {
                   <div class="row">
                     <div class="col-md-12">
                       <p class="text-center">
-                        <strong><?php echo $lang['finance']; ?> : January, <?php year_now(); ?> - December, <?php year_now(); ?></strong>
+                        <strong><?php echo $lang['finance']; ?> : January, <?php year_now('','hello'); ?> - December, <?php year_now('','hello'); ?></strong>
                       </p>
                       <div class="chart">
                       	

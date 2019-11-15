@@ -67,12 +67,14 @@ class Client {
 	
 	public function login($email = null, $password = null, $remember = false)
 	{
+	
 	 if (!$email && !$password && $this->exists()) {
 	 	Session::put($this->_sessionName, $this->data()->clientid);
 		 
 	 } else {
 		 
 	  $client = $this->find($email);
+	 
 	  if ($client) {
 		 if ($this->data()->password === Hash::make($password, $this->data()->salt)) {
 			Session::put($this->_sessionName, $this->data()->clientid);
