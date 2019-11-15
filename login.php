@@ -51,10 +51,8 @@ if (Input::exists()) {
 	         $client = new Client();
 			 
 			 $remember = (Input::get('remember') === 'on') ? true : false;
-			
 			 $login = $client->login(Input::get('email'), Input::get('password'), $remember);
-			// print_r($login);
-			//  exit;
+			 
 			 if ($login === true) {
 	           Redirect::to('Client/');
 			 }else {
