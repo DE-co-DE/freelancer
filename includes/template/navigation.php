@@ -20,8 +20,37 @@ $test = $_SERVER["REQUEST_URI"];
 	       		<i class="fa <?php echo $site_icon; ?>"></i>
 	       	<?php endif; ?> 
 	       	<?php echo escape($title); ?></a>
+			
+		 
 	      </div>
+		  
+		
+		  
+		  
 	    </div>
+		
+		<br>
+		
+		  <div class="collapse navbar-collapse navbar-main navbar-right">
+		  <form action="searchpage.php" method="get">
+		  <div class="d-inline-block">
+		  <input type="text" class="searchinput" name="searchterm" placeholder="<?php echo $searchterm; ?>" value=""/> 
+		 <button  class="btn btn-success">Search</button>
+</div>
+		 </form>
+		  </div>
+		  <style>
+		  
+		  .searchinput {
+			  
+			  height: 32px;
+		  }
+		  
+		  </style>
+		  
+		 
+		
+		<br><br>
 	    <div class="collapse navbar-collapse navbar-main navbar-right">
 	      <ul class="nav navbar-nav header-nav__navigation">
 	        <li class="header-nav__navigation-item
@@ -77,7 +106,7 @@ $test = $_SERVER["REQUEST_URI"];
                   	<?php echo escape($admin->data()->name); ?>
                   </span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu user_drop_down">
 						<li class="m_2"><a href="Admin/dashboard.php"><i class="fa fa-dashboard"></i><?php echo $lang['dashboard']; ?></a></li>
 						<li class="m_2"><a href="Admin/profile.php?a=profile"><i class="fa fa-user"></i><?php echo $lang['view']; ?> <?php echo $lang['profile']; ?></a></li>
 						<li class="m_2"><a href="Admin/logout.php"><i class="fa fa-lock"></i> <?php echo $lang['logout']; ?></a></li>	
@@ -96,7 +125,7 @@ $test = $_SERVER["REQUEST_URI"];
                   	<?php echo escape($client->data()->name); ?>
                   </span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu user_drop_down">
 						<li class="m_2"><a href="Client/"><i class="fa fa-dashboard"></i><?php echo $lang['dashboard']; ?></a></li>
 						<li class="m_2"><a href="Client/profile.php?a=profile"><i class="fa fa-user"></i><?php echo $lang['view']; ?> <?php echo $lang['profile']; ?></a></li>
 						<li class="m_2"><a href="Client/logout.php"><i class="fa fa-lock"></i> <?php echo $lang['logout']; ?></a></li>	
@@ -115,7 +144,7 @@ $test = $_SERVER["REQUEST_URI"];
                   	<?php echo escape($freelancer->data()->name); ?>
                   </span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu user_drop_down">
 						<li class="m_2"><a href="Freelancer/index.php"><i class="fa fa-dashboard"></i><?php echo $lang['dashboard']; ?></a></li>
 						<li class="m_2"><a href="Freelancer/profile.php?a=profile"><i class="fa fa-user"></i><?php echo $lang['view']; ?> <?php echo $lang['profile']; ?></a></li>
 						<li class="m_2"><a href="Freelancer/logout.php"><i class="fa fa-lock"></i> <?php echo $lang['logout']; ?></a></li>	
@@ -152,3 +181,8 @@ $test = $_SERVER["REQUEST_URI"];
 	    </div>
 	  </nav>
 	</header>     
+	<script>
+	$('.dropdown-toggle').click(function(){
+		$('.user_drop_down').toggle()
+	})
+	</script>

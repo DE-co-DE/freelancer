@@ -94,6 +94,10 @@ if ($q2->count()) {
 		<link rel="apple-touch-icon" href="img/favicons/apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="img/favicons/apple-touch-icon-72x72.png">
 		<link rel="apple-touch-icon" sizes="114x114" href="img/favicons/apple-touch-icon-114x114.png">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
 		
 	    <!-- ==============================================
 		CSS
@@ -105,6 +109,9 @@ if ($q2->count()) {
 		Feauture Detection
 		=============================================== -->
 		<script src="/js/modernizr-custom.js"></script>
+		
+		
+		<!--<script src="https://kenwheeler.github.io/slick/slick/slick.js"></script>-->
 		
 		<!--[if lt IE 9]>
 		 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

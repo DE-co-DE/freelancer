@@ -1,0 +1,6 @@
+[27-Sep-2019 13:08:43 Asia/Kolkata] PHP Fatal error:  Uncaught exception 'PayPal\Exception\PayPalConnectionException' with message 'Resolving timed out after 10000 milliseconds' in /home/troislog/public_html/freelancer/assets/plugins/vendor/paypal/rest-api-sdk-php/lib/PayPal/Core/PayPalHttpConnection.php:137
+Stack trace:
+#0 /home/troislog/public_html/freelancer/assets/plugins/vendor/paypal/rest-api-sdk-php/lib/PayPal/Auth/OAuthTokenCredential.php(249): PayPal\Core\PayPalHttpConnection->execute('grant_type=clie...')
+#1 /home/troislog/public_html/freelancer/assets/plugins/vendor/paypal/rest-api-sdk-php/lib/PayPal/Auth/OAuthTokenCredential.php(274): PayPal\Auth\OAuthTokenCredential->getToken(Array, 'AVyqLeVR8HUGf8V...', 'EJf34V7XQsuEYDQ...', 'grant_type=clie...')
+#2 /home/troislog/public_html/freelancer/assets/plugins/vendor/paypal/rest-api-sdk-php/lib/PayPal/Auth/OAuthTokenCredential.php(218): PayPal\Auth\OAuthTokenCredential->generateAccessToken(Array, NULL)
+#3 /home/troislog/public_html/freelancer/assets/plugins/vendor/paypal/rest-api-sdk-php/lib/PayPal/Auth/OAu in /home/troislog/public_html/freelancer/assets/plugins/vendor/paypal/rest-api-sdk-php/lib/PayPal/Core/PayPalHttpConnection.php on line 137

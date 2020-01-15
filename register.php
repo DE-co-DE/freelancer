@@ -27,7 +27,8 @@ if ($query->count()) {
 $q1 = DB::getInstance()->get("payments_settings", "*", ["id" => 1]);
 if ($q1->count()) {
  foreach($q1->results() as $r1) {
- 	$currency = $r1->currency;
+ 	$currency = $r1->currency; 
+
  	$membershipid = $r1->membershipid;
  }			
 }
@@ -45,142 +46,9 @@ if ($q1->count() === 1) {
  }
 }
 
-//Register Function
-if (Input::exists()) {
- if(Token::check(Input::get('token'))){
- 	 
-    $errorHandler = new ErrorHandler;
+
+
 	
-	$validator = new Validator($errorHandler);
-	
-	$validation = $validator->check($_POST, [
-	  'name' => [
-		 'required' => true,
-		 'minlength' => 2,
-		 'maxlength' => 50
-	   ],
-	  'email' => [
-	     'required' => true,
-	     'email' => true,
-	     'maxlength' => 100,
-	     'minlength' => 2,
-	     'unique' => 'freelancer',
-	     'unique' => 'client'
-	  ],			 
-	  'username' => [
-	     'required' => true,
-	     'maxlength' => 20,
-	     'minlength' => 3,
-	     'unique' => 'freelancer',
-	     'unique' => 'client'
-	  ],
-	   'password' => [
-	     'required' => true,
-	     'minlength' => 6
-	   ],
-	   'confirmPassword' => [
-	     'match' => 'password'
-	   ]
-	]);
-	 	
-	  if (!$validation->fails()) {
-
-	      if (Input::get('user_type') == 0) {
-		        $client = new Client();
-		  
-				$remember = (Input::get('remember') === 'on') ? true : false;
-				$salt = Hash::salt(32);  
-				$imagelocation = 'uploads/default.png';
-				$clientid = uniqueid(); 
-				try{
-					
-				  $client->create(array(
-				   'clientid' => $clientid,
-				   'username' => Input::get('username'),
-				   'password' => Hash::make(Input::get('password'), $salt),
-				   'salt' => $salt,
-				   'name' => Input::get('name'),
-		           'email' => Input::get('email'),
-				   'imagelocation' => $imagelocation,
-		           'joined' => date('Y-m-d H:i:s'),
-				   'active' => 1,
-		           'user_type' => 1
-				  ));	
-				  
-				if ($client) {
-			     $login = $client->login(Input::get('email'), Input::get('password'), $remember);
-				 Redirect::to('Client/');
-			    }else {
-			     $hasError = true;
-			   }
-					
-				}catch(Exception $e){
-				 die($e->getMessage());	
-				}				      	
-	          
-	      } else {
-			if($membershipid != ''){
-			    
-			    $freelancer = new Freelancer();
-		  
-				$remember = (Input::get('remember') === 'on') ? true : false;
-				$salt = Hash::salt(32);  
-				$imagelocation = 'uploads/default.png';
-				$bgimage = 'uploads/bg/default.jpg';
-				$freelancerid = uniqueid(); 
-				try{
-					
-				  $freelancer->create(array(
-				   'freelancerid' => $freelancerid,
-				   'username' => Input::get('username'),
-				   'password' => Hash::make(Input::get('password'), $salt),
-				   'salt' => $salt,
-				   'name' => Input::get('name'),
-		           'email' => Input::get('email'),
-				   'imagelocation' => $imagelocation,
-				   'bgimage' => $bgimage,
-		           'membershipid' => $membershipid,
-		           'membership_bids' => $bids,
-		           'membership_date' => date('Y-m-d H:i:s'),
-		           'joined' => date('Y-m-d H:i:s'),
-				   'active' => 1,
-		           'user_type' => 1
-				  ));	
-				  
-				if ($freelancer) {
-			     $login = $freelancer->login(Input::get('email'), Input::get('password'), $remember);
-				 Redirect::to('Freelancer/');
-			    }else {
-			     $hasError = true;
-			   }
-					
-				}catch(Exception $e){
-				 die($e->getMessage());	
-				}	
-	          } else {
-				  $memError = true;
-				}
-	      }
-       
-		
-	  } else {
-	     $error = '';
-	     foreach ($validation->errors()->all() as $err) {
-	     	$str = implode(" ",$err);
-	     	$error .= '
-		           <div class="alert alert-danger fade in">
-		            <a href="#" class="close" data-dismiss="alert">&times;</a>
-		            <strong>Error!</strong> '.$str.'<br/>
-			       </div>
-			       ';
-	     }
-		 
-      }
-
- }	  
-  	
-}
-
 ?>
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -210,7 +78,8 @@ if (Input::exists()) {
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-		
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
 	    <!-- ==============================================
 		CSS
 		=============================================== -->
@@ -463,7 +332,8 @@ $test = $_SERVER["REQUEST_URI"];
 		} ?>
 	     	
 		  <div class="form-sign">
-		   <form method="post">
+		
+		   <form method="post" action="">
 		    <div class="form-head">
 			 <h3><?php echo $lang['register']; ?></h3>
 			</div><!-- /.form-head -->
@@ -497,7 +367,37 @@ $test = $_SERVER["REQUEST_URI"];
                         //alert(0);
                         $(".chb").prop('checked',false);
                         $(this).prop('checked',true);
-                });
+				});
+				$("form").submit(function(e) {
+					console.log($("form").serialize());
+					e.preventDefault();
+                        $.ajax({
+							type:'POST',
+							url:'RegisterSubmit.php',
+							data:$(this).serialize(),
+							success:function(resp){
+							//	alert(resp)
+							if(resp.includes('otp sent')){
+								
+								$('#otp').removeClass('hidden');
+							}else if(resp=='Freelancer' || resp=='Client'){
+								Swal.fire({
+							 
+							  type: 'success',
+							  title: 'Registration successfull.',
+							  showConfirmButton: false,
+							  timer: 1500
+							})
+							setTimeout(function(){window.location.href=resp+'/'},1000);
+							} 
+
+							else{
+								$('.error').html(resp);
+							}
+							}
+						});
+                      
+				});
                 });
             </script>
 			
@@ -532,15 +432,26 @@ $test = $_SERVER["REQUEST_URI"];
              </div><!-- /.form-row -->
 		   
 			 </div><!-- /.form-body -->
-	
+			 <div class="form-row hidden" id="otp" >
+			 <label style="color:white">We have sent you otp on your mail id</label>
+			  <div class="form-controls">
+
+			   <input type="number" name="otp" class="field" placeholder="Enter your OTP">
+			  </div><!-- /.form-controls -->
+             </div><!-- /.form-row -->
+		   
+			 </div>
 			 <div class="form-foot">
 			  <div class="form-actions">
+			 
                <input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
+
 			   <input value="<?php echo $lang['register']; ?>" class="form-btn" type="submit">
 			  </div><!-- /.form-actions -->
 			 </div><!-- /.form-foot -->
 		   </form>
-		   
+		   <br>
+		     <div class="error"></div>
 		  </div><!-- /.form-sign -->
 	     </div><!-- /.col-lg-6 -->
         </main>

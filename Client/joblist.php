@@ -125,15 +125,20 @@ require_once 'stripe/config.php';
 					      <a href="../jobpost.php?title='. escape($row->slug) .'" target="_blank" class="btn btn-primary btn-xs" data-toggle="tooltip" title="' . $lang['view'] . ' ' . $lang['job'] . '"><span class="fa fa-eye"></span></a>'; 
 						  $delete .='
 					      <a href="editjob.php?id=' . escape($row->jobid) . '" class="btn btn-success btn-xs" data-toggle="tooltip" title="' . $lang['edit'] . '"><span class="fa fa-edit"></span></a>
-					      <a id="' . escape($row->id) . '" class="btn btn-danger btn-xs" data-toggle="tooltip" title="' . $lang['delete'] . '"><span class="fa fa-trash"></span></a>';  
+					      <a href="jobdelete.php?id=' . escape($row->id) . '" class="btn btn-danger btn-xs" data-toggle="tooltip" title="' . $lang['delete'] . '"><span class="fa fa-trash"></span></a>';  
 						  			
 	                        if(!$row->public == 1):
 						    $public = '
-						    <a id="' . escape($row->id) . '" class="btn btn-kafe btn-xs" data-toggle="tooltip" title="' . $lang['make'] . ' ' . $lang['public'] . '"><span class="fa fa-globe"></span></a>';
+						    <a href="publichidejob.php?id=' . escape($row->id) . '&pub='. escape($row->public) .'" class="btn btn-kafe btn-xs" data-toggle="tooltip" title="' . $lang['make'] . ' ' . $lang['public'] . '"><span class="fa fa-globe"></span></a>';
 							else:
-						    $public = '<a id="' . escape($row->id) . '" class="btn btn-warning btn-xs" data-toggle="tooltip" title="' . $lang['hide'] . ' ' . $lang['from'] . ' ' . $lang['public'] . '"><span class="fa fa-user-secret"></span></a>';
+						    $public = '<a href="publichidejob.php?id=' . escape($row->id) . '&pub='. escape($row->public) .'" class="btn btn-warning btn-xs" data-toggle="tooltip" title="' . $lang['hide'] . ' ' . $lang['from'] . ' ' . $lang['public'] . '"><span class="fa fa-user-secret"></span></a>';
 							endif;	
 								
+						
+							//code for public and hide job
+							
+							
+							
 	                        if(!$row->active == 1):
 						    $mark = '
 						    <a id="' . escape($row->id) . '" class="btn btn-info btn-xs" data-toggle="tooltip" title="' . $lang['activate'] . '"><span class="fa fa-check-square"></span></a>';
@@ -275,42 +280,8 @@ require_once 'stripe/config.php';
         });
       });
     </script>
-    <script type="text/javascript">
-	$(function() {
+    
 	
-	
-	$(".btn-danger").click(function(){
-	
-	//Save the link in a variable called element
-	var element = $(this);
-	
-	//Find the id of the link that was clicked
-	var id = element.attr("id");
-	
-	//Built a url to send
-	var info = 'id=' + id;
-	 if(confirm("<?php echo $lang['delete_job']; ?>"))
-			  {
-			var parent = $(this).parent().parent();
-				$.ajax({
-				 type: "GET",
-				 url: "template/delete/deletejob.php",
-				 data: info,
-				 success: function()
-					   {
-						parent.fadeOut('slow', function() {$(this).remove();});
-					   }
-				});
-			 
-	
-			  }
-		   return false;
-	
-		});
-	
-	});
-	</script>
-
 	<script type="text/javascript">
 	$(function() {
 	
@@ -380,75 +351,8 @@ require_once 'stripe/config.php';
 	
 	});
 	</script>	
-	<script type="text/javascript">
-	$(function() {
 	
-	$(".btn-kafe").click(function(){
-	
-	//Save the link in a variable called element
-	var element = $(this);
-	
-	//Find the id of the link that was clicked
-	var id = element.attr("id");
-	
-	//Built a url to send
-	var info = 'id=' + id;
-	 if(confirm("<?php echo $lang['make_public']; ?>"))
-			  {
-			var parent = $(this).parent().parent();
-				$.ajax({
-				 type: "GET",
-				 url: "template/actions/makepublic.php",
-				 data: info,
-				 success: function()
-					   {
-						window.location.reload();
-					   }
-				});
-			 
-	
-			  }
-		   return false;
-	
-		});	
-	
-	});
-	</script>
-	
-	<script type="text/javascript">
-	$(function() {
-	
-	$(".btn-warning").click(function(){
-	
-	//Save the link in a variable called element
-	var element = $(this);
-	
-	//Find the id of the link that was clicked
-	var id = element.attr("id");
-	
-	//Built a url to send
-	var info = 'id=' + id;
-	 if(confirm("<?php echo $lang['hide_public']; ?>"))
-			  {
-			var parent = $(this).parent().parent();
-				$.ajax({
-				 type: "GET",
-				 url: "template/actions/hidepublic.php",
-				 data: info,
-				 success: function()
-					   {
-						window.location.reload();
-					   }
-				});
-			 
-	
-			  }
-		   return false;
-	
-		});		
-	
-	});
-	</script>		
+			
     
 </body>
 </html>

@@ -26,54 +26,95 @@ if(!file_exists('core/frontinit.php')){
       <!-- ==============================================
 	 Header
 	 =============================================== -->	 
-	 <header class="header" style="
-	 <?php if ($header_img !== 'assets/img/header/1.jpg') { ?>
-    background: linear-gradient(
-      rgba(34,34,34,0.5), 
-      rgba(34,34,34,0.5)
-    ), url('<?php echo $header_img; ?>') no-repeat center center fixed;
-   background-size: cover;
-  background-position: center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  color: #fff;
-  height: 100vh;
-  width: 100%;
+	 <!--<header class="header" style="-->
+	 <?php // if ($header_img !== 'assets/img/header/1.jpg') { ?>
+  <!--  background: linear-gradient(-->
+  <!--    rgba(34,34,34,0.5), -->
+  <!--    rgba(34,34,34,0.5)-->
+    <!--), url('<?php // echo $header_img; ?>') no-repeat center center fixed;-->
+  <!-- background-size: cover;-->
+  <!--background-position: center center;-->
+  <!---webkit-background-size: cover;-->
+  <!---moz-background-size: cover;-->
+  <!---o-background-size: cover;-->
+  <!--color: #fff;-->
+  <!--height: 100vh;-->
+  <!--width: 100%;-->
   
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;	 	
+  <!--display: flex;-->
+  <!--flex-direction: column;-->
+  <!--justify-content: center;-->
+  <!--align-items: center;-->
+  <!--text-align: center;	 	-->
 		 
-	 <?php }else{ ?>
-  background: url('<?php echo $header_img; ?>') repeat 50% 0;
-  color: #fff;
-  height: 100vh;
-  width: 100%;
+	 <?php // }else{ ?>
+  <!--background: url('<?php// echo $header_img; ?>') repeat 50% 0;-->
+  <!--color: #fff;-->
+  <!--height: 100vh;-->
+  <!--width: 100%;-->
   
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;"
-	 <?php } ?>>
-      <div class="container">
+  <!--display: flex;-->
+  <!--flex-direction: column;-->
+  <!--justify-content: center;-->
+  <!--align-items: center;-->
+  <!--text-align: center;"-->
+	 <?php // } ?>>
+	 
+	 <div class="" style="position:absolute;"> 
+  <div id="myCarousel" class="carousel slide" style="margin-top:110px;" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="<?php echo $header_img; ?>" alt="Los Angeles" style="width:100%;">
+      </div>
+
+      <div class="item">
+        <img src="<?php echo $header_img; ?>" alt="Chicago" style="width:100%;">
+      </div>
+    
+      <div class="item">
+        <img src="<?php echo $header_img; ?>" alt="New york" style="width:100%;">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+	 
+      
+     <!--</header><!--./header -->	
+     
+     
+     <div class="container">
 	   
         <div class="row">
-		<div class="banner-content">
-		<h2 class="banner-title"><?php echo $top_title; ?></h2>
+		<div class="banner-content" style="margin-top:15%;">
+		<h2 style="position:relative;color:white;" class="banner-title"><?php echo $top_title; ?></h2>
        	<?php if($show_downtitle === '1'): ?>
-		<h3 class="banner-description"><?php echo $down_title; ?></h3>
+		<h3 style="position:relative;color:white;" class="banner-description"><?php echo $down_title; ?></h3>
        	<?php endif; ?> 
 		
-		 <form action="searchpage.php" method="get" class="list-s">
+		 <form action="searchpage.php" method="get" class="list-s" style="width: 85%;margin-left: auto;margin-right: auto;display: table;">
 		  <button><?php echo $lang['get']; ?> <?php echo $lang['a']; ?> <?php echo $lang['quote']; ?></button>
 		  <input type="text" class="form-control" name="searchterm" placeholder="<?php echo $searchterm; ?>" value=""/>   
 		  <div class="clearfix"></div>
-		 </form>
-		<p><?php echo $lang['trending']; ?> <?php echo $lang['services']; ?>:
+		 </form>  
+		<p style="position: relative;"><?php echo $lang['trending']; ?> <?php echo $lang['services']; ?>:
         <?php
 				
 	        $dbc = mysqli_connect(Config::get('mysql/host'), Config::get('mysql/username'), Config::get('mysql/password'), Config::get('mysql/db')) OR die('Could not connect because:' .mysqli_connect_error());
@@ -113,11 +154,12 @@ if(!file_exists('core/frontinit.php')){
         </div><!--./row -->
         
 	  </div><!--./container -->
-     </header><!--./header -->	
+     
+     
       <!-- ==============================================
 	 Categories Section
 	 =============================================== -->
-	 <section class="categories">
+	 <section class="categories" style="position:relative;">
 	  <div class="container">
        <div class="row">
        	

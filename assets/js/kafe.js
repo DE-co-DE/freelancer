@@ -61,12 +61,12 @@ $(document).ready(function() {
 	/*============================================
 	Typed Functions
 	==============================================*/	
-	  $("#typed").typed({
-        stringsElement: $('#typed-strings'),
-		typeSpeed: 0,
-        contentType: 'html',
-		showCursor: false
-	  });
+	//   $("#typed").typed({
+    //     stringsElement: $('#typed-strings'),
+	// 	typeSpeed: 0,
+    //     contentType: 'html',
+	// 	showCursor: false
+	//   });
 	  
 	/*============================================
 	Appear JS
