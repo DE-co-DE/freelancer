@@ -4,18 +4,18 @@ error_reporting(E_ALL);
 session_start();
 
 $GLOBALS['config'] = array(
- // 'mysql' => array(
-  //   'host' => 'localhost',
-  //   'username' => 'troislog_freeln',
-  //   'password' => 'troislogic@2019',
-  //   'db' => 'troislog_freelancer'
-  // ),
   'mysql' => array(
     'host' => 'localhost',
-    'username' => 'root',
-    'password' => '',
-    'db' => 'freelancer'
+    'username' => 'troislog_freeln',
+    'password' => 'troislogic@2019',
+    'db' => 'troislog_freelancer'
   ),
+  // 'mysql' => array(
+  //   'host' => 'localhost',
+  //   'username' => 'root',
+  //   'password' => '',
+  //   'db' => 'freelancer'
+  // ),
   'remember' => array(
     'cookie_name' => 'hash',
     'cookie_expiry' => 604800
