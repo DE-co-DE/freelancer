@@ -196,7 +196,7 @@ if(!file_exists('core/frontinit.php')){
               $postCounter += 1; 
 			  
 		    echo $List .= '
-			        <div class="col-lg-4">
+			        <div class="col-lg-4 shake">
 					 <a href="searchcat.php?searchterm='. escape($row->name) .'" style="height: 295.4px;">
 			          <i class="fa '. $row->icon .'"></i>
 			          <h6>'. escape($row->name) .'</h6>

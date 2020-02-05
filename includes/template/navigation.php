@@ -42,7 +42,8 @@ $test = $_SERVER["REQUEST_URI"];
 		  <style>
 		  
 		  .searchinput {
-			  
+			 
+			  min-width: 450px;
 			  height: 32px;
 		  }
 		  
