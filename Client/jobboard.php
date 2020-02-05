@@ -1666,10 +1666,10 @@ if (Input::exists()) {
 		                     if($query->count()) {
 								foreach($query->results() as $row) {
 									
-									?>					
-							    <tr>
-							  <td> <?php echo  $milestone_name; ?> </td>
-							   <td></td> <?php
+														
+							    echo '<tr>';
+							    echo '<td>' . escape($milestone_name) . '</td>';
+							    echo '<td>' . escape($job_title) . '</td>';
 							    echo '<td><a href="../client.php?a=overview&id='. $clientid .'" target="_blank">'. escape($client->data()->name) .'</a></td>';
 							    echo '<td><a href="../freelancer.php?a=overview&id='. $r3->freelancerid .'" target="_blank">'. escape($freelancer_name) .'</a></td>';
 								if(escape($row->transaction_type) == 1):
