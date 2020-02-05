@@ -1668,8 +1668,8 @@ if (Input::exists()) {
 									
 									?>					
 							    <tr>
-							  <td> <?php echo  $milestone_name ?> </td>
-							   <td><?php echo $job_title ?></td> <?php
+							  <td> <?php echo  $milestone_name; ?> </td>
+							   <td><?php echo $job_title; ?></td> <?php
 							    echo '<td><a href="../client.php?a=overview&id='. $clientid .'" target="_blank">'. escape($client->data()->name) .'</a></td>';
 							    echo '<td><a href="../freelancer.php?a=overview&id='. $r3->freelancerid .'" target="_blank">'. escape($freelancer_name) .'</a></td>';
 								if(escape($row->transaction_type) == 1):
