@@ -63,11 +63,7 @@ if(!file_exists('core/frontinit.php')){
 	 <div class="" style="position:absolute;"> 
   <div id="myCarousel" class="carousel slide" style="margin-top:110px;" data-ride="carousel">
     <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
+  
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
@@ -196,7 +192,7 @@ if(!file_exists('core/frontinit.php')){
               $postCounter += 1; 
 			  
 		    echo $List .= '
-			        <div class="col-lg-4">
+			        <div class="col-lg-4 shake">
 					 <a href="searchcat.php?searchterm='. escape($row->name) .'" style="height: 295.4px;">
 			          <i class="fa '. $row->icon .'"></i>
 			          <h6>'. escape($row->name) .'</h6>
