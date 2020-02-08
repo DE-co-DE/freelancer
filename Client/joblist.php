@@ -125,7 +125,7 @@ require_once 'stripe/config.php';
 					      <a href="../jobpost.php?title='. escape($row->slug) .'" target="_blank" class="btn btn-primary btn-xs" data-toggle="tooltip" title="' . $lang['view'] . ' ' . $lang['job'] . '"><span class="fa fa-eye"></span></a>'; 
 						  $delete .='
 					      <a href="editjob.php?id=' . escape($row->jobid) . '" class="btn btn-success btn-xs" data-toggle="tooltip" title="' . $lang['edit'] . '"><span class="fa fa-edit"></span></a>
-					      <a href="jobdelete.php?id=' . escape($row->id) . '" class="btn btn-danger btn-xs" data-toggle="tooltip" title="' . $lang['delete'] . '"><span class="fa fa-trash"></span></a>';  
+					      <a href="javascript:void(0)" onClick="deleteJob('.escape($row->id) .')" class="btn btn-danger btn-xs" data-toggle="tooltip" title="' . $lang['delete'] . '"><span class="fa fa-trash"></span></a>';  
 						  			
 	                        if(!$row->public == 1):
 						    $public = '
@@ -278,7 +278,15 @@ require_once 'stripe/config.php';
         /* No ordering applied by DataTables during initialisation */
         "order": []
         });
-      });
+	  });
+	  
+	  function deleteJob(id) {
+		  let confirmIt = confirm("Are you sure you want to delete this job")
+		  if(confirmIt){
+			window.location.href = "jobdelete.php?id="+id;
+
+		  }
+	  }
     </script>
     
 	
