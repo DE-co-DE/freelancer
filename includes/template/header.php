@@ -108,7 +108,7 @@ if ($q2->count()) {
 		<!-- ==============================================
 		Feauture Detection
 		=============================================== -->
-		<script src="/js/modernizr-custom.js"></script>
+		<script src="assets/js/modernizr-custom.js"></script>
 		
 		
 		<!--<script src="https://kenwheeler.github.io/slick/slick/slick.js"></script>-->

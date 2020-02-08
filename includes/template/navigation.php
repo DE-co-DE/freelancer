@@ -46,7 +46,13 @@ $test = $_SERVER["REQUEST_URI"];
 			  min-width: 450px;
 			  height: 32px;
 		  }
-		  
+		  @media screen and (max-width: 600px) {
+			.searchinput {
+			 
+			 min-width: 350px;
+			 height: 32px;
+		 }
+}
 		  </style>
 		  
 		 
@@ -185,5 +191,8 @@ $test = $_SERVER["REQUEST_URI"];
 	<script>
 	$('.dropdown-toggle').click(function(){
 		$('.user_drop_down').toggle()
+	})
+	$('.header-nav__button').click(function(){
+		$('.navbar-main').toggle()
 	})
 	</script>
