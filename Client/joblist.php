@@ -281,7 +281,11 @@ require_once 'stripe/config.php';
 	  });
 	  
 	  function deleteJob(id) {
-		  window.location.href = "jobdelete.php?id="+id;
+		  let confirmIt = confirm("Are you sure you want to delete this job")
+		  if(confirmIt){
+			window.location.href = "jobdelete.php?id="+id;
+
+		  }
 	  }
     </script>
     
