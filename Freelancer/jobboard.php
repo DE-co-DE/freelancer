@@ -1898,7 +1898,7 @@ if (Input::exists()) {
                       </tr>
                     </thead>
                     <tbody>
-				    <?
+				    <?php
 						$q3 = DB::getInstance()->get("job", "*", ["AND" =>["jobid" => $jobid, "freelancerid" => $freelancer->data()->freelancerid, "invite" => "0", "delete_remove" => 0, "accepted" => 1]]);
 						if ($q3->count()) {
 						 foreach($q3->results() as $r3) {

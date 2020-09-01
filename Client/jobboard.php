@@ -1644,7 +1644,7 @@ if (Input::exists()) {
                       </tr>
                     </thead>
                     <tbody>
-				    <?
+				    <?php
 						$q3 = DB::getInstance()->get("job", "*", ["AND" =>["jobid" => $jobid, "clientid" => $client->data()->clientid, "invite" => "0", "delete_remove" => 0, "accepted" => 1]]);
 						if ($q3->count()) {
 						 foreach($q3->results() as $r3) {
@@ -2652,8 +2652,8 @@ if (Input::exists()) {
 	});
 	</script>
 
-    <script src="../assets/js/jquery.knob.min.js"></script>
-    <script src="../assets/js/knob.js"></script>    
+    <!--<script src="../assets/js/jquery.knob.min.js"></script>-->
+    <!--<script src="../assets/js/knob.js"></script>    -->
     <!-- DATA TABES SCRIPT -->
     <script src="../assets/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="../assets/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>

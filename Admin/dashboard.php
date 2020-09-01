@@ -41,7 +41,7 @@ if (!$admin->isLoggedIn()) {
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1><?php echo $lang['dashboard']; ?><small><?php echo $lang['control_panel']; ?></small></h1>
+          <h1><?php echo $lang['dashboard']; ?></h1>
           <ol class="breadcrumb">
             <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> <?php echo $lang['home']; ?></a></li>
             <li class="active"><?php echo $lang['dashboard']; ?></li>

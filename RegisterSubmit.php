@@ -139,6 +139,82 @@ $headers .= 'From: <admin@troislogic.com>' . "\r\n";
                exit;
             }
         }
+        
+        if(Input::get('user_type') == 2){
+            
+            $client = new Client();
+            $freelancer = new Freelancer();
+            
+            $remember = (Input::get('remember') === 'on') ? true : false;
+            $salt = Hash::salt(32);  
+            $imagelocation = 'uploads/default.png';
+            $clientid = uniqueid(); 
+            $otp=  $_SESSION['otp'];
+            $bgimage = 'uploads/bg/default.jpg';
+            $freelancerid = uniqueid(); 
+            
+            try{
+          
+            $client->create(array(
+               'clientid' => $clientid,
+               'username' => Input::get('username'),
+               'password' => Hash::make(Input::get('password'), $salt),
+               'salt' => $salt,
+               'name' => Input::get('name'),
+                   'email' => Input::get('email'),
+               'imagelocation' => $imagelocation,
+                   'joined' => date('Y-m-d H:i:s'),
+               'active' => 1,
+                       'user_type' => 1,
+                       'otp' =>$otp,
+                       'otp_verified'=>1
+             )); 
+          
+            if ($client) {
+                    $login = $client->login(Input::get('email'), Input::get('password'), $remember);
+                    echo'Client';
+              }else {
+               $hasError = true;
+            }
+          
+            }catch(Exception $e){
+             echo $e->getMessage(); 
+            }
+            
+            try{
+          
+              $freelancer->create(array(
+               'freelancerid' => $freelancerid,
+               'username' => Input::get('username'),
+               'password' => Hash::make(Input::get('password'), $salt),
+               'salt' => $salt,
+               'name' => Input::get('name'),
+                   'email' => Input::get('email'),
+               'imagelocation' => $imagelocation,
+               'bgimage' => $bgimage,
+                   'membershipid' => $membershipid,
+                   'membership_bids' => $bids,
+                   'membership_date' => date('Y-m-d H:i:s'),
+                   'joined' => date('Y-m-d H:i:s'),
+               'active' => 1,
+                   'user_type' => 1,
+                       'otp' =>$otp,
+                       'otp_verified'=>1
+              )); 
+          
+            if ($freelancer) {
+                        $login = $freelancer->login(Input::get('email'), Input::get('password'), $remember);
+            echo 'Freelancer';
+    
+              }else {
+               $hasError = true;
+             }
+              
+            }catch(Exception $e){
+             echo $e->getMessage(); 
+            } 
+            
+        }else{
 
         if (Input::get('user_type') == 0) {
 
@@ -229,7 +305,7 @@ $headers .= 'From: <admin@troislogic.com>' . "\r\n";
           $memError = true;
         }
         }
-       
+    }
     
     } else {
       

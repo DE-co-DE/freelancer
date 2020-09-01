@@ -1,0 +1,1 @@
+[08-Feb-2020 16:26:46 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '}', expecting elseif (T_ELSEIF) or else (T_ELSE) or endif (T_ENDIF) in /home/troislog/public_html/freelancer/Client/jobboard.php on line 1697

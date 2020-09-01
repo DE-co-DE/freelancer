@@ -357,6 +357,7 @@ $test = $_SERVER["REQUEST_URI"];
              <li class="list-group-item">
                 <label class="checkbox-inline"><input type="checkbox" name="user_type" class="chb" value="1"><?php echo $lang['freelancer']; ?></label>
                 <label class="checkbox-inline"><input type="checkbox" name="user_type" class="chb" value="0"><?php echo $lang['client']; ?></label>
+                <label class="checkbox-inline"><input type="checkbox" name="user_type" class="chb" value="2">Both</label>
              </li>
             </ul>
             
@@ -380,7 +381,7 @@ $test = $_SERVER["REQUEST_URI"];
 							if(resp.includes('otp sent')){
 								
 								$('#otp').removeClass('hidden');
-							}else if(resp=='Freelancer' || resp=='Client'){
+							}else if(resp=='Freelancer' || resp=='Client' || resp=='ClientFreelancer'){
 								Swal.fire({
 							 
 							  type: 'success',
